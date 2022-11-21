@@ -53,8 +53,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.webView1.setWebViewClient(Callback())
 
-        binding.webView1.loadUrl("http://192.168.10.149:8080");
-//        binding.webView1.loadUrl("file:///android_asset/idemia.html")
+//        binding.webView1.loadUrl("http://192.168.10.149:8080");
+        binding.webView1.loadUrl("file:///android_asset/index.html")
     }
 
     private class Callback : WebViewClient() {
