@@ -1,6 +1,8 @@
 package com.example.webviewtest
 
 import android.annotation.TargetApi
+import android.content.ActivityNotFoundException
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.Menu
@@ -24,11 +26,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAnchorView(R.id.fab)
-                .setAction("Action", null).show()
-        }
 
         initWebView()
     }
@@ -42,18 +39,19 @@ class MainActivity : AppCompatActivity() {
         binding.webView1.settings.setBuiltInZoomControls(true);
         binding.webView1.settings.setAllowFileAccess(true);
         binding.webView1.settings.setSupportZoom(true);
+        binding.webView1.settings.mediaPlaybackRequiresUserGesture = false
 
-        binding.webView1.setWebChromeClient(object : WebChromeClient() {
-            override fun onPermissionRequest(request: PermissionRequest) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    request.grant(request.resources)
-                }
+        WebView.setWebContentsDebuggingEnabled(true)
+        binding.webView1.webChromeClient = object : WebChromeClient() {
+            override fun onPermissionRequest(request: PermissionRequest?) {
+                request?.grant(request.resources)
             }
-        })
+        }
 
         binding.webView1.setWebViewClient(Callback())
 
-//        binding.webView1.loadUrl("http://192.168.10.149:8080");
+//        binding.webView1.loadUrl("https://liveness.devel.mati.io");
+//        binding.webView1.loadUrl("https://product.devel-28.mati.io/biometric-sdk/index.html?mobile=true&color=0097a7&locale=en&merchantToken=62500b0d25323c8d5a757d08&flowId=63bc1e339eb239357ece43d6&identityId=63bdce76d86823001bff3915&verificationId=63bdce76d86823001bff3917");
         binding.webView1.loadUrl("file:///android_asset/index.html")
     }
 
